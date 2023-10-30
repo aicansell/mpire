@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_rest_passwordreset',
+
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +75,7 @@ ROOT_URLCONF = 'mpire.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,6 +89,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mpire.wsgi.application'
+
+#Chaging base auth model
+AUTH_USER_MODEL = 'authentication.User'
 
 
 # Database postgres
@@ -162,3 +168,11 @@ MEDIA_URL = 'media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email Env Variables
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = get_env_variable("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = get_env_variable("EMAIL_HOST_PASSWORD")
