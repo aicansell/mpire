@@ -20,14 +20,15 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     ROLES = (
-        ('end_consumer', 'End Consumer'),
-        ('internal_manager', 'Internal Manager'),
+        ('customer', 'Customer'),
+        ('vendor', 'Vendor'),
         ('admin', 'admin'),
+        ('super_admin', 'Super Admin'),
     )
     
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=30, unique=False)
-    user_type = models.CharField(max_length=50, choices=ROLES, default='end_consumer')
+    user_type = models.CharField(max_length=50, choices=ROLES, default='customer')
     is_emailverified = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=20, unique=True)
     state = models.CharField(max_length=30)
@@ -41,7 +42,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
-    
+
 class EmailConfirmationToken(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
