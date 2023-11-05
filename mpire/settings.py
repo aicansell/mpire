@@ -98,7 +98,7 @@ AUTH_USER_MODEL = 'authentication.User'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.mysql',
             'NAME': get_env_variable("DB_NAME"),
             'USER': get_env_variable("DB_USER"),
             'PASSWORD': get_env_variable("DB_PASSWORD"),
