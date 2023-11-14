@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_rest_passwordreset',
+    'corsheaders',
 
     'authentication',
 ]
@@ -68,7 +69,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+# Allow all origins to access the application
+CORS_ALLOW_ALL_ORIGINS = True
+
+# Allow credentials (cookies, authentication headers)
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'mpire.urls'
 
