@@ -24,7 +24,11 @@ class LoginViewSet(APIView):
         email = request.data.get('email')
         password = request.data.get('password')
     
-        user = User.objects.get(email=email)    
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+            
         if user is not None and user.check_password(password):
             refresh = RefreshToken.for_user(user)
             user_data = LoginSerializer(user).data

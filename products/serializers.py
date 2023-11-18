@@ -3,6 +3,11 @@ from rest_framework import serializers
 from products.models import Category, SubCategory, Product, ProductImages
 
 class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'category_name']
+
+class CategoryListSerializer(serializers.ModelSerializer):
     subcategory = serializers.SerializerMethodField()
     
     def get_subcategory(self, obj):
@@ -13,8 +18,12 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id', 'category_name', 'subcategory']
 
-
 class SubCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubCategory
+        fields = ['id', 'subcategory_name', 'category']
+
+class SubCategoryListSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubCategory
         fields = ['id', 'subcategory_name']
