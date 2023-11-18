@@ -53,7 +53,7 @@ class CategoryViewSet(ViewSet, LoggingMixin):
         instance = self.get_object(pk)
         
         request_data = {
-            'category_name': request.data.get('category_name'),
+            'category_name': request.data.get('category_name', instance.category_name),
         }
         
         serializer = CategorySerializer(instance, data=request_data)
@@ -119,8 +119,8 @@ class SubCategoryViewSet(ViewSet,LoggingMixin):
         instance = self.get_object(pk)
         
         request_data = {
-            'subcategory_name': request.data.get('subcategory_name'),
-            'category': request.data.get('category')
+            'subcategory_name': request.data.get('subcategory_name', instance.subcategory_name),
+            'category': request.data.get('category', instance.category)
         }
         
         serializer = SubCategorySerializer(instance, data=request_data)
