@@ -31,16 +31,18 @@ class SubCategoryListSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name',	'mfg_date',	'price', 'price_unit', 'description', 'created_by', 'subcategory']
+        fields = ['id', 'name',	'mfg_date',	'price', 'price_unit', 'description', 'created_by', 'subcategory', 'updated_by']
         extra_kwargs = {
-            'created_by' : {"write_only": True}
+            'created_by' : {"write_only": True},
+            'updated_by' : {"write_only": True},
         }
+    
     def save(self, **kwargs):
         product = super().save()
         image_files = self.context.get("images")
         if image_files:
             files = [
-                ProductImages(image = file, product = product) for file in image_files
+                ProductImages(image=file, product=product) for file in image_files
             ]
             ProductImages.objects.bulk_create(files)
         return product
