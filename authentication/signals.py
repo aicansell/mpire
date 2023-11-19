@@ -34,7 +34,7 @@ def send_verification_email(sender, instance, created, **kwargs):
         token = EmailConfirmationToken.objects.create(user=instance)
         token.save()
 
-        verification_url = f"https://mpire.pythonanywhere.com/verify/?token={token.id}"
+        verification_url = f"http://localhost:8000/verify/?token={token.id}"
 
         # Create the email content
         data = {

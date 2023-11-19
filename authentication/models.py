@@ -12,10 +12,18 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        return self.create_user(email, password,**extra_fields)
+    def create_superuser(self, email, password):
+        user = self.create_user(
+            email=email,
+            password=password,
+        )
+
+        user.is_staff = True
+        user.is_active = True
+        user.is_superuser = True
+
+        user.save(using=self._db)
+        return user
     
 
 class User(AbstractUser):
@@ -27,15 +35,16 @@ class User(AbstractUser):
     )
     
     email = models.EmailField(unique=True)
-    username = models.CharField(max_length=30, unique=False)
+    username = models.CharField(max_length=30, unique=False, null=True, blank=True)
     user_type = models.CharField(max_length=50, choices=ROLES, default='customer')
     is_emailverified = models.BooleanField(default=False)
-    phone_number = models.CharField(max_length=20, unique=True)
+    phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True)
     state = models.CharField(max_length=30)
+    
+    objects = UserManager()
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-    objects=UserManager()
         
     class Meta:
         db_table = 'auth_user'
