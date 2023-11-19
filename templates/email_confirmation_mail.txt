@@ -1,6 +1,0 @@
-Hi, {{name}}
-
-Click on the link below, to confirm your email address.
-{{link}}
-
-Thanks
