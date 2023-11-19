@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -152,10 +153,99 @@ class ProductViewSet(ViewSet,LoggingMixin):
         return Product.objects.all()
     
     def list(self, request):
-        serializer = ProductListSerializer(self.get_queryset(), many=True)
+        products = self.get_queryset()
+        products = products.filter(created_by=request.user.id)
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def retrieve(self, request, pk):
         instance = self.get_object(pk)
         serializer = ProductListSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request):
+        existing_product = Product.objects.filter(name__icontains=request.data.get('name')).first()
+        if existing_product:
+            return Response({'status': 'error', 'message': 'Product already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        request_data = {
+            'name': request.data.get('name'),
+            'mfg_date': request.data.get('mfg_date'),
+            'price': request.data.get('price'),
+            'price_unit': request.data.get('price_unit'),
+            'description': request.data.get('description'),
+            'subcategory': request.data.get('subcategory'),
+            'created_by': request.user.id,
+        }
+        
+        images = request.FILES.getlist('images')
+        
+        context = {
+            'images': images,
+        }
+        
+        serializer = ProductSerializer(data=request_data, context=context)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        
+        response = {
+            'status': 'success',
+            'message': "Product created successfully",
+        }
+        
+        return Response(response, status=status.HTTP_201_CREATED)
+
+    def update(self, request, pk):
+        instance = self.get_object(pk)
+        
+        request_data = {
+            'name': request.data.get('name', instance.name),
+            'mfg_date': request.data.get('mfg_date', instance.mfg_date),
+            'price': request.data.get('price', instance.price),
+            'price_unit': request.data.get('price_unit', instance.price_unit),
+            'description': request.data.get('description', instance.description),
+            'subcategory': request.data.get('subcategory', instance.subcategory),
+            'updated_by': request.user.id,
+        }
+        
+        images = request.FILES.getlist('images')
+        
+        context = {
+            'images': images,
+        }
+        
+        serializer = ProductSerializer(instance, data=request_data, context=context)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        response = {
+            'status': 'success',
+            'message': "Product updated successfully",
+        }
+        
+        return Response(response, status=status.HTTP_201_CREATED)
+    
+    def destroy(self, request, pk):
+        instance = self.get_object(pk)
+        instance.delete()
+        response = {
+            'status': 'success',
+            'message': "Product deleted successfully",
+        }
+        
+        return Response(response, status=status.HTTP_204_NO_CONTENT)
+
+class ProductListingViewSet(ViewSet, LoggingMixin):
+    def list(self, request):
+        product = request.query_params.get('product')
+        filters = []
+        if product:
+            filters.append(Q(name__icontains=product) | Q(subcategory__subcategory_name__icontains=product) | Q(subcategory__category__category_name__icontains=product))
+        
+        products = Product.objects.all()
+        
+        if product:
+            products = products.filter(*filters)
+            
+        serializer = ProductListSerializer(products, many=True)
+        
         return Response(serializer.data, status=status.HTTP_200_OK)
