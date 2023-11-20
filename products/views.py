@@ -10,6 +10,7 @@ from products.models import Category, SubCategory, Product
 from products.serializers import CategorySerializer, CategoryListSerializer
 from products.serializers import SubCategorySerializer, SubCategoryListSerializer
 from products.serializers import ProductSerializer, ProductListSerializer
+from products.utlis import Checking_Product
 
 
 class CategoryViewSet(ViewSet, LoggingMixin):
@@ -164,6 +165,9 @@ class ProductViewSet(ViewSet,LoggingMixin):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
+        if request.user.user_type == 'customer':
+            return Response({"status": "error", "message": "You are not allowed to create product"}, status=status.HTTP_400_BAD_REQUEST)
+        
         existing_product = Product.objects.filter(name__icontains=request.data.get('name')).first()
         if existing_product:
             return Response({'status': 'error', 'message': 'Product already exists'}, status=status.HTTP_400_BAD_REQUEST)
@@ -245,6 +249,8 @@ class ProductListingViewSet(ViewSet, LoggingMixin):
         
         if product:
             products = products.filter(*filters)
+            if not products:
+                Checking_Product(product, request.user)
             
         serializer = ProductListSerializer(products, many=True)
         

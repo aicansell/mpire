@@ -40,6 +40,7 @@ class User(AbstractUser):
     is_emailverified = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True)
     state = models.CharField(max_length=30)
+    first_time = models.BooleanField(default=False)
     
     objects = UserManager()
     
@@ -60,3 +61,13 @@ class EmailConfirmationToken(models.Model):
     
     def __str__(self):
         return f'{self.user.email} - {self.created_at}'
+
+class VendorModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pancard = models.FileField(upload_to='media/vendor/pancard')
+    gst = models.FileField(upload_to='media/vendor/gst')
+    proof_of_registration = models.FileField(upload_to='media/vendor/proof_of_registration')
+    approved = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f'{self.user.firstname} - {self.approved}'

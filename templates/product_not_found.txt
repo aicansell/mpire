@@ -1,0 +1,11 @@
+Hi, admin
+
+This Product: {{product_name}}, has been searched on portal, but currently, this product doesn't exist 
+in our database.
+
+Here are client details:
+Name : {{name}}
+Email : {{email}}
+
+
+Thankyou
