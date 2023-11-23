@@ -94,7 +94,7 @@ class EmailVerificationViewSet(APIView):
             token = EmailConfirmationToken.objects.create(user=user)
             token.save()
             
-        verification_url = f"http://localhost:8000/verify/?token={token.id}"
+        verification_url = f"http://mpirebackend.eba-cnyr2zti.ap-south-1.elasticbeanstalk.com/?token={token.id}"
 
         data = {
             'name': user.first_name + ' ' + user.last_name,
