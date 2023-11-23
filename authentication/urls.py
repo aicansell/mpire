@@ -1,9 +1,12 @@
 from django.urls import path, include
 
 from rest_framework_simplejwt.views import TokenRefreshView
+
 from authentication.views import RegisterViewSet, LoginViewSet, ChangePasswordViewSet, EmailVerificationViewSet
+from accounts.views import HomeView
 
 urlpatterns = [
+    path('', HomeView, name='home'),
     path('register', RegisterViewSet.as_view(), name='registeration'),
     path('login', LoginViewSet.as_view(), name='login'),
     path('changepassword', ChangePasswordViewSet.as_view(), name='login'),

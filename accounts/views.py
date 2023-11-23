@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
 from rest_framework.exceptions import status
@@ -167,3 +168,6 @@ class VendorViewSet(ViewSet):
         }
         
         return Response(response, status=status.HTTP_200_OK)
+
+def HomeView(request):
+    return HttpResponse("Welcome to the Home Page!")
