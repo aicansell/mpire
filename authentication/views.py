@@ -27,7 +27,7 @@ class LoginViewSet(APIView):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'User Not Found'}, status=status.HTTP_400_BAD_REQUEST)
             
         if user is not None and user.check_password(password):
             refresh = RefreshToken.for_user(user)
