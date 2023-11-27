@@ -8,7 +8,7 @@ from authentication.models import User
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username','password', 'email', 'first_name', 'last_name', 'user_type', 'phone_number', 'state')
+        fields = ('username','password', 'email', 'first_name', 'last_name', 'user_type', 'phone_number', 'state', 'profile_photo')
         extra_kwargs = {
             'password': {'write_only': True, 'required': True, 'validators': [validate_password]},
             'email': {'required': True, 'validators': [UniqueValidator(queryset=User.objects.all())]},
@@ -27,6 +27,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             phone_number = validated_data['phone_number'],
             user_type = user_type,
             state = validated_data['state'],
+            profile_photo = validated_data['profile_photo'],
         )
         
         user.set_password(validated_data['password'])

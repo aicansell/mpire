@@ -41,6 +41,7 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True)
     state = models.CharField(max_length=30)
     first_time = models.BooleanField(default=False)
+    profile_photo = models.FileField(upload_to='media/user/profile_photo', null=True, blank=True)
     
     objects = UserManager()
     

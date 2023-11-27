@@ -35,6 +35,7 @@ class UserViewSet(LoggingMixin, ViewSet):
             'last_name': request.data.get('last_name', instance.last_name),
             'state': request.data.get('state', instance.state),
             'first_time': request.data.get('first_time', instance.first_time),
+            'profile_photo': request.data.get('profile_photo', instance.profile_photo),
         }
         
         serializer = UserSerializer(instance, data=request_data)
@@ -57,6 +58,7 @@ class UserViewSet(LoggingMixin, ViewSet):
             'last_name': request.data.get('last_name', instance.last_name),
             'state': request.data.get('state', instance.state),
             'first_time': request.data.get('first_time', instance.first_time),
+            'profile_photo': request.data.get('profile_photo', instance.profile_photo),
         }
         
         serializer = UserSerializer(instance, data=request_data, partial=True)
