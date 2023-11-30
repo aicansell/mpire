@@ -31,7 +31,7 @@ class SubCategoryListSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name',	'mfg_date',	'price', 'price_unit', 'description', 'created_by', 'subcategory', 'updated_by']
+        fields = ['id', 'name',	'mfg_date',	'price', 'price_unit', 'description', 'hashtags', 'created_by', 'subcategory', 'updated_by']
         extra_kwargs = {
             'created_by' : {"write_only": True},
             'updated_by' : {"write_only": True},
@@ -54,16 +54,12 @@ class ProductImagesSerializer(serializers.ModelSerializer):
 
 class ProductListSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
-    description = serializers.SerializerMethodField()
     
     def get_images(self, obj):
         data = ProductImages.objects.filter(product=obj)
         return ProductImagesSerializer(data, many=True).data
     
-    def get_description(self, obj):
-        return obj.get_description_as_dict()
-    
     class Meta:
         model = Product
-        fields = ['id', 'name',	'mfg_date',	'price', 'price_unit', 'description', 'created_by', 'subcategory', 'images']
+        fields = ['id', 'name',	'mfg_date',	'price', 'price_unit', 'description', 'hashtags', 'created_by', 'subcategory', 'images']
         

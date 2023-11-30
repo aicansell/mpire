@@ -25,9 +25,9 @@ class SubCategory(models.Model):
 
 class Product(Common):
     PRICE_UNIT_CHOICES = (
-        ("Piece", "Piece"),
-        ("Unit", "Unit"),
-        ("default", "default")
+        ("piece", "Piece"),
+        ("unit", "Unit"),
+        ("default", "Default")
     )
 
     name = models.CharField(max_length=100)
@@ -35,13 +35,11 @@ class Product(Common):
     price = models.DecimalField(max_digits=10,decimal_places=2)
     price_unit = models.CharField(max_length=40, choices=PRICE_UNIT_CHOICES, default="default")
     description = models.TextField()
+    hashtags = models.CharField(max_length=200, null=True, blank=True)
     subcategory = models.ForeignKey(SubCategory, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
-    
-    def get_description_as_dict(self):
-        return json.loads(self.description)
     
     class Meta:
         verbose_name = "Product"

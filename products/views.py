@@ -146,7 +146,6 @@ class SubCategoryViewSet(ViewSet,LoggingMixin):
         return Response(response, status=status.HTTP_204_NO_CONTENT)
     
 class ProductViewSet(ViewSet,LoggingMixin):
-
     def get_object(self, pk):
         return get_object_or_404(Product, pk=pk)
     
@@ -168,17 +167,15 @@ class ProductViewSet(ViewSet,LoggingMixin):
         if request.user.user_type == 'customer':
             return Response({"status": "error", "message": "You are not allowed to create product"}, status=status.HTTP_400_BAD_REQUEST)
         
-        existing_product = Product.objects.filter(name__icontains=request.data.get('name')).first()
-        if existing_product:
-            return Response({'status': 'error', 'message': 'Product already exists'}, status=status.HTTP_400_BAD_REQUEST)
         
         request_data = {
             'name': request.data.get('name'),
             'mfg_date': request.data.get('mfg_date'),
             'price': request.data.get('price'),
-            'price_unit': request.data.get('price_unit'),
+            'price_unit': request.data.get('price_unit', "default"),
             'description': request.data.get('description'),
             'subcategory': request.data.get('subcategory'),
+            'hashtags': request.data.get('hashtags'),
             'created_by': request.user.id,
         }
         
@@ -209,6 +206,7 @@ class ProductViewSet(ViewSet,LoggingMixin):
             'price_unit': request.data.get('price_unit', instance.price_unit),
             'description': request.data.get('description', instance.description),
             'subcategory': request.data.get('subcategory', instance.subcategory),
+            'hashtags': request.data.get('hashtags', instance.hashtags),
             'updated_by': request.user.id,
         }
         
@@ -243,7 +241,7 @@ class ProductListingViewSet(ViewSet, LoggingMixin):
         product = request.query_params.get('product')
         filters = []
         if product:
-            filters.append(Q(name__icontains=product) | Q(subcategory__subcategory_name__icontains=product) | Q(subcategory__category__category_name__icontains=product))
+            filters.append(Q(name__icontains=product) | Q(subcategory__subcategory_name__icontains=product) | Q(subcategory__category__category_name__icontains=product) | Q(hashtags__icontains=product))
         
         products = Product.objects.all()
         

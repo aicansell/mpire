@@ -30,7 +30,7 @@ class User(AbstractUser):
     ROLES = (
         ('customer', 'Customer'),
         ('vendor', 'Vendor'),
-        ('admin', 'admin'),
+        ('admin', 'Admin'),
         ('super_admin', 'Super Admin'),
     )
     
