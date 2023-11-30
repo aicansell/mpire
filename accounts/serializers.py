@@ -5,7 +5,7 @@ from authentication.models import User, VendorModel
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 'state', 'first_time']
+        fields = ['id', 'email', 'first_name', 'user_type', 'last_name', 'state', 'first_time', 'profile_photo', 'phone_number']
 
 class VendorSerializer(serializers.ModelSerializer):
     class Meta:

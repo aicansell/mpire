@@ -20,14 +20,14 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_type = validated_data.get('user_type', 'end_consumer')
         user = User.objects.create(
-            username = validated_data['username'],
+            username = validated_data.get('username', "default"),
             email = validated_data['email'],
             first_name = validated_data['first_name'],
             last_name = validated_data['last_name'],
             phone_number = validated_data['phone_number'],
             user_type = user_type,
-            state = validated_data['state'],
-            profile_photo = validated_data['profile_photo'],
+            state = validated_data.get('state'),
+            profile_photo = validated_data.get('profile_photo'),
         )
         
         user.set_password(validated_data['password'])

@@ -71,4 +71,4 @@ class VendorModel(models.Model):
     approved = models.BooleanField(default=False)
     
     def __str__(self):
-        return f'{self.user.firstname} - {self.approved}'
+        return f'{self.user.first_name} - {self.approved}'
