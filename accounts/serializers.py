@@ -8,6 +8,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'first_name', 'user_type', 'last_name', 'state', 'first_time', 'profile_photo', 'phone_number']
 
 class VendorSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    
+    def get_user(self, obj):
+        return UserSerializer(obj.user).data
+    
     class Meta:
         model = VendorModel
         fields = ['id', 'user', 'pancard', 'gst', 'proof_of_registration', 'approved']

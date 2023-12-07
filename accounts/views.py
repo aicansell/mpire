@@ -21,6 +21,11 @@ class UserViewSet(LoggingMixin, ViewSet):
     def get_queryset():
         return User.objects.all()
     
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
     def retrieve(self, request, pk):
         instance = self.get_object(pk)
         serializer = UserSerializer(instance)
@@ -86,6 +91,11 @@ class VendorViewSet(ViewSet):
     @staticmethod
     def get_queryset():
         return VendorModel.objects.all()
+    
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = VendorSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     def retrieve(self, request, pk):
         instance = self.get_object(pk)

@@ -205,7 +205,7 @@ class ProductViewSet(ViewSet,LoggingMixin):
             'price': request.data.get('price', instance.price),
             'price_unit': request.data.get('price_unit', instance.price_unit),
             'description': request.data.get('description', instance.description),
-            'subcategory': request.data.get('subcategory', instance.subcategory),
+            'subcategory': request.data.get('subcategory', instance.subcategory.id),
             'hashtags': request.data.get('hashtags', instance.hashtags),
             'updated_by': request.user.id,
         }
