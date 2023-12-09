@@ -8,6 +8,8 @@ from authentication.models import EmailConfirmationToken, User
 
 from authentication.serializers import RegisterSerializer, LoginSerializer, ChangePasswordSerializer
 from authentication.utils import send_email
+from authentication.models import VendorModel
+from accounts.serializers import VendorCreateSerializer
 
 class RegisterViewSet(APIView):
     def post(self, request):
@@ -38,6 +40,14 @@ class LoginViewSet(APIView):
                 'access': str(refresh.access_token),
                 'user': user_data
             }
+            
+            if user_data.get('user_type') == 'vendor':
+                try:
+                    vendor = VendorModel.objects.get(user=user)
+                    vendor_data = VendorCreateSerializer(vendor).data
+                    response['vendor'] = vendor_data
+                except VendorModel.DoesNotExist:
+                    response['vendor'] = None
                 
             return Response(response, status=status.HTTP_200_OK)
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)

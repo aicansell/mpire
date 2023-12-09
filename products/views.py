@@ -145,7 +145,7 @@ class SubCategoryViewSet(ViewSet,LoggingMixin):
         
         return Response(response, status=status.HTTP_204_NO_CONTENT)
     
-class ProductViewSet(ViewSet,LoggingMixin):
+class ProductViewSet(ViewSet, LoggingMixin):
     def get_object(self, pk):
         return get_object_or_404(Product, pk=pk)
     

@@ -8,7 +8,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework_tracking.mixins import LoggingMixin
 
 from authentication.models import User, VendorModel
-from accounts.serializers import UserSerializer, VendorSerializer
+from accounts.serializers import UserSerializer, VendorSerializer, VendorCreateSerializer
 
 class UserViewSet(LoggingMixin, ViewSet):
     permission_classes = [IsAuthenticated]
@@ -119,7 +119,7 @@ class VendorViewSet(ViewSet):
                 'proof_of_registration': request.data.get('proof_of_registration'),
             }
             
-            serializer = VendorSerializer(data=request_data)
+            serializer = VendorCreateSerializer(data=request_data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             
