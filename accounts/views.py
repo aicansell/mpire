@@ -117,6 +117,9 @@ class VendorViewSet(ViewSet):
                 'pancard': request.data.get('pancard'),
                 'gst': request.data.get('gst'),
                 'proof_of_registration': request.data.get('proof_of_registration'),
+                'address': request.data.get('address'),
+                'website': request.data.get('website'),
+                'date_of_incorporation': request.data.get('date_of_incorporation'),
             }
             
             serializer = VendorCreateSerializer(data=request_data)
@@ -140,6 +143,9 @@ class VendorViewSet(ViewSet):
             'gst': request.data.get('gst', instance.gst),
             'proof_of_registration': request.data.get('proof_of_registration', instance.proof_of_registration),
             'approved': request.data.get('approved', instance.approved),
+            'address': request.data.get('address', instance.address),
+            'website': request.data.get('website', instance.website),
+            'date_of_incorporation': request.data.get('date_of_incorporation', instance.date_of_incorporation),
         }
         
         serializer = VendorSerializer(instance, data=request_data)
@@ -161,6 +167,9 @@ class VendorViewSet(ViewSet):
             'gst': request.data.get('gst', instance.gst),
             'proof_of_registration': request.data.get('proof_of_registration', instance.proof_of_registration),
             'approved': request.data.get('approved', instance.approved),
+            'address': request.data.get('address', instance.address),
+            'website': request.data.get('website', instance.website),
+            'date_of_incorporation': request.data.get('date_of_incorporation', instance.date_of_incorporation),
         }
         
         serializer = VendorSerializer(instance, data=request_data, partial=True)

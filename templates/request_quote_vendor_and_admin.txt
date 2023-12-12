@@ -1,0 +1,7 @@
+Hi,
+
+{{request_user}} has request a quote of product : {{product_name}}.
+
+Message by {{request_user}} : {{message}}
+
+Thanks

@@ -37,6 +37,7 @@ class Product(Common):
     description = models.TextField()
     hashtags = models.CharField(max_length=200, null=True, blank=True)
     subcategory = models.ForeignKey(SubCategory, null=True, blank=True, on_delete=models.CASCADE)
+    view_count = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return self.name

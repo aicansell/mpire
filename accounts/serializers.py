@@ -15,9 +15,9 @@ class VendorSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = VendorModel
-        fields = ['id', 'user', 'pancard', 'gst', 'proof_of_registration', 'approved']
+        fields = ['id', 'user', 'pancard', 'gst', 'proof_of_registration', 'approved', 'address', 'website', 'date_of_incorporation']
         
 class VendorCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = VendorModel
-        fields = ['id', 'user', 'pancard', 'gst', 'proof_of_registration', 'approved']
+        fields = ['id', 'user', 'pancard', 'gst', 'proof_of_registration', 'approved', 'address', 'website', 'date_of_incorporation']

@@ -65,6 +65,9 @@ class EmailConfirmationToken(models.Model):
 
 class VendorModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    address = models.CharField(max_length=100, null=True, blank=True)
+    website = models.CharField(max_length=300, null=True, blank=True)
+    date_of_incorporation = models.DateField(null=True, blank=True)
     pancard = models.FileField(upload_to='media/vendor/pancard')
     gst = models.FileField(upload_to='media/vendor/gst')
     proof_of_registration = models.FileField(upload_to='media/vendor/proof_of_registration')

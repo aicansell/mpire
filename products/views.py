@@ -161,6 +161,8 @@ class ProductViewSet(ViewSet, LoggingMixin):
     def retrieve(self, request, pk):
         instance = self.get_object(pk)
         serializer = ProductListSerializer(instance)
+        instance.view_count += 1
+        instance.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):

@@ -62,6 +62,8 @@ INSTALLED_APPS = [
     'Common',
     'authentication',
     'products',
+    'notifications',
+    'requestquote',
 ]
 
 MIDDLEWARE = [

@@ -26,4 +26,6 @@ urlpatterns = [
     path('transaction/', include('transaction.urls'), name='transactions'),
     path('products/', include('products.urls'), name='products'),
     path('accounts/', include('accounts.urls'), name='accounts'),
+    path('notifications/', include('notifications.urls'), name='notifications'),
+    path('requestquote/', include('requestquote.urls'), name='requestquote'),
 ]
