@@ -98,6 +98,8 @@ class NotificationViewSet(LoggingMixin, ViewSet):
             'title': request.data.get('title'),
         }
         
+        request_data['user'] = list(request_data['user'].split(','))
+
         try:
             for id in request_data.get('user'):
                 request_data['user'] = id

@@ -5,7 +5,9 @@ def send_quote_email(requestquote, contact_me=None):
     data = {
         'request_user': requestquote.requestuser.get_full_name(),
         'product_name': requestquote.product.name,
-        'message': requestquote.message
+        'message': requestquote.message,
+        'email_id': requestquote.requestuser.email,
+        'phone_number': requestquote.requestuser.phone_number
     }
     
     mails = []

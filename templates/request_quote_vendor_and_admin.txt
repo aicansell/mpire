@@ -4,4 +4,9 @@ Hi,
 
 Message by {{request_user}} : {{message}}
 
+User Details:
+name : {{request_user}}
+emailid : {{email_id}}
+phone number : {{phone_number}}
+
 Thanks

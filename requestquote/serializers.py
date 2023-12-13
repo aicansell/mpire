@@ -5,7 +5,7 @@ from requestquote.models import RequestQuote
 class RequestQuoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestQuote
-        fields = ['id', 'product', 'requestuser', 'message']
+        fields = ['id', 'product', 'requestuser', 'message', 'mark_read', 'created_at']
         
 class RequestQuoteListSerializer(serializers.ModelSerializer):
     product = serializers.SerializerMethodField()
