@@ -4,6 +4,7 @@ from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_tracking.mixins import LoggingMixin
 
 from products.models import Category, SubCategory, Product
@@ -146,6 +147,8 @@ class SubCategoryViewSet(ViewSet,LoggingMixin):
         return Response(response, status=status.HTTP_204_NO_CONTENT)
     
 class ProductViewSet(ViewSet, LoggingMixin):
+    permission_classes = [IsAuthenticated]
+    
     def get_object(self, pk):
         return get_object_or_404(Product, pk=pk)
     

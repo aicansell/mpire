@@ -23,4 +23,4 @@ class RequestQuoteListSerializer(serializers.ModelSerializer):
         return obj.requestuser.get_full_name()
         
     def get_vendorname(self, obj):
-        return obj.product.created_by.get_full_name()
+        return obj.product.created_by.first_name
