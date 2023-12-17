@@ -3,7 +3,7 @@ from authentication.models import User
 
 def send_quote_email(requestquote, contact_me=None):
     data = {
-        'request_user': requestquote.requestuser.get_full_name(),
+        'request_user': requestquote.requestuser.first_name,
         'product_name': requestquote.product.name,
         'message': requestquote.message,
         'email_id': requestquote.requestuser.email,
