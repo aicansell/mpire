@@ -156,8 +156,12 @@ class ProductViewSet(ViewSet, LoggingMixin):
         return Product.objects.all()
     
     def list(self, request):
+        vendor = request.query_params.get('vendor')
         products = self.get_queryset()
-        products = products.filter(created_by=request.user.id)
+        if vendor:
+            products = products.filter(created_by=vendor)
+        else:
+            products = products.filter(created_by=request.user.id)
         serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
